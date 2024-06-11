@@ -5,11 +5,9 @@ import './scss/app.scss';
 import NotFound from './pages/NotFound';
 import Cart from './pages/Cart';
 import { createContext, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-
 export const SearchContext = createContext();
 function App() {
-    const dispatch = useDispatch();
+
     
   const [searchInput, setSearchInput] = useState('');
 
