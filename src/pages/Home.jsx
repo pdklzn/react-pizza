@@ -8,6 +8,7 @@ import Pagination from '../components/Pagination';
 import { SearchContext } from '../App';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { setItems } from '../redux/slices/pizzasSlice';
 import axios from 'axios';
 import qs from 'qs';
 import { useNavigate } from 'react-router-dom';
@@ -15,9 +16,10 @@ import { useNavigate } from 'react-router-dom';
 const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const categoryId = useSelector((state) => state.filterSlice.categoryId);
-  const sort = useSelector((state) => state.filterSlice.sort);
-  const currentPage = useSelector((state) => state.filterSlice.currentPage);
+
+  const { categoryId, currentPage, sort } = useSelector((state) => state.filterSlice);
+  const items = useSelector((state) => state.pizza.items);
+
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -29,25 +31,27 @@ const Home = () => {
     dispatch(setCurrentPage(num));
   };
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
-
     const sortBy = sort.sort;
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
-    // const search = searchInput ? `&search=${searchInput}` : '';
-    axios
-      .get(
+
+    try {
+      const { data } = await axios.get(
         `https://6661792b63e6a0189fea0cf0.mockapi.io/items?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=desc`,
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
+      );
+      dispatch(setItems(data));
+    } catch (error) {
+      console.error('jopa', error);
+    } finally {
+      setIsLoading(false);
+    }
+
+    window.scrollTo(0, 0);
   };
 
   const { searchInput } = useContext(SearchContext);
 
-  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
