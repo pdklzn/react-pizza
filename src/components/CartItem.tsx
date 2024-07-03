@@ -2,9 +2,20 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addItem, minusItem, removeItem } from '../redux/slices/cartSlice';
 
+type TCartItemProps = {
+    types: number,
+    id: number,
+    title: string,
+    price: number,
+    count: number,
+    sizes: string,
+    imageUrl: string,
+  };
+
+
 const pizzaTypes = ['Традиционная', 'Тонкая'];
 
-const CartItem = ({ types, id, title, price, count, sizes, imageUrl }) => {
+const CartItem = ({ types, id, title, price, count, sizes, imageUrl }: TCartItemProps) => {
   const dispatch = useDispatch();
 
   const onClickPlus = () => {

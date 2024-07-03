@@ -5,8 +5,8 @@ import Search from './Search';
 import { useSelector } from 'react-redux';
 
 const Header = () => {
-  const { items, totalPrice } = useSelector((state) => state.cart);
-    const totalCount = items.reduce((acc, item) => acc + item.count, 0)
+  const { items, totalPrice } = useSelector((state: any) => state.cart);
+    const totalCount = items.reduce((acc: number, item: any) => acc + item.count, 0)
   return (
     <div className="header">
       <div className="container">

@@ -1,15 +1,29 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/slices/cartSlice';
+import { Link } from 'react-router-dom';
+
+type TPizzaBlockProps = {
+    types: number[],
+    id: number,
+    title: string,
+    price: number,
+    count: number,
+    sizes: number[],
+    imageUrl: string,
+    category: string,
+    rating: number,
+    link: any
+  };
 
 const pizzaTypes = ['Традиционная', 'Тонкая'];
 
-const PizzaBlock = ({ title, imageUrl, types, sizes, price, category, rating, id }) => {
+const PizzaBlock = ({ title, imageUrl, types, sizes, price, category, rating, id, link }: TPizzaBlockProps) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state) => state.cart.items.find((obj) => obj.id === id));
+  const cartItem = useSelector((state:any) => state.cart.items.find((obj:any) => obj.id === id));
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
-    const addedCount = cartItem? cartItem.count : 0;
+  const addedCount = cartItem ? cartItem.count : 0;
 
   const onClickAdd = () => {
     const item = {
@@ -28,7 +42,9 @@ const PizzaBlock = ({ title, imageUrl, types, sizes, price, category, rating, id
   return (
     <div className="pizza-block-wrapper">
       <div className="pizza-block">
+        <Link to={link}>
         <img className="pizza-block__image" src={imageUrl} alt="Pizza" />
+        </Link>
         <h4 className="pizza-block__title">{title}</h4>
         <div className="pizza-block__selector">
           <ul>
@@ -67,7 +83,7 @@ const PizzaBlock = ({ title, imageUrl, types, sizes, price, category, rating, id
               />
             </svg>
             <span>Добавить</span>
-            {addedCount > 0 &&<i>{addedCount}</i>}
+            {addedCount > 0 && <i>{addedCount}</i>}
           </div>
         </div>
       </div>

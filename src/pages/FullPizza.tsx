@@ -1,9 +1,17 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+type TypePizza = {
+    imageUrl: string,
+    title: string,
+    price: number,
+  }
+
+
 const FullPizza = () => {
-  const [pizza, setPizza] = useState();
+
+  const [pizza, setPizza] = useState<TypePizza>();
   const {id} = useParams();
 
   useEffect(() => {

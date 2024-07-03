@@ -1,16 +1,16 @@
-import React, { useContext, useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Categories from '../components/Categories';
 import { filterList } from '../components/Sort';
 import { Sort } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaItem from '../components/PizzaItem';
-import Pagination from '../components/Pagination';
+import { Pagination } from '../components/Pagination';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice.js';
+import { fetchPizzas } from '../redux/slices/pizzasSlice.js';
 
 import qs from 'qs';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
   const navigate = useNavigate();
@@ -18,13 +18,13 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
-  const { categoryId, currentPage, sort, searchValue } = useSelector((state) => state.filterSlice);
-  const { items, status } = useSelector((state) => state.pizza);
+  const { categoryId, currentPage, sort, searchValue } = useSelector((state:any) => state.filterSlice);
+  const { items, status } = useSelector((state:any) => state.pizza);
 
-  const onClickCategory = (id) => {
+  const onClickCategory = (id:number ) => {
     dispatch(setCategoryId(id));
   };
-  const onChangePage = (num) => {
+  const onChangePage   = (num:number) => {
     dispatch(setCurrentPage(num));
   };
 
@@ -32,6 +32,7 @@ const Home = () => {
     const sortBy = sort.sort;
     const category = categoryId > 0 ? `&category=${categoryId}` : '';
     dispatch(
+        //@ts-ignore
       fetchPizzas({
         sortBy,
         category,
@@ -98,12 +99,8 @@ const Home = () => {
           [...new Array(8)].map((_, i) => <Skeleton key={i} />)
         ) : (
           items
-            .filter((value) => value.title.toLowerCase().includes(searchValue.toLowerCase()))
-            .map((item) => (
-              <Link key={item.id} to={`/pizza/${item.id}`}>
-                <PizzaItem  {...item} />
-              </Link>
-            ))
+            .filter((value:any) => value.title.toLowerCase().includes(searchValue.toLowerCase()))
+            .map((item:any) => <PizzaItem key={item.id} {...item} link={`/pizza/${item.id}`} />)
         )}
       </div>
       <Pagination onChangePage={onChangePage} />
