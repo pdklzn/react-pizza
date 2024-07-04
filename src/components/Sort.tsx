@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
+import { RootState } from '../redux/store';
 
 type TypeSort = {
     name: string,
@@ -16,7 +17,7 @@ export const filterList:TypeSort[] = [
 
 export const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector((state:any) => state.filterSlice.sort);
+  const sort = useSelector((state: RootState) => state.filterSlice.sort);
 
   const sortRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -27,7 +28,7 @@ export const Sort = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (event:any) => {
+    const handleClickOutside = (event: any) => {
       if (sortRef.current && !sortRef.current.contains(event.target)) {
         setIsVisible(false);
       }

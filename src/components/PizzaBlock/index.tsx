@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItem } from '../../redux/slices/cartSlice';
 import { Link } from 'react-router-dom';
+import { RootState } from '../../redux/store';
 
 type TPizzaBlockProps = {
     types: number[],
@@ -20,7 +21,7 @@ const pizzaTypes = ['Традиционная', 'Тонкая'];
 
 const PizzaBlock = ({ title, imageUrl, types, sizes, price, category, rating, id, link }: TPizzaBlockProps) => {
   const dispatch = useDispatch();
-  const cartItem = useSelector((state:any) => state.cart.items.find((obj:any) => obj.id === id));
+  const cartItem = useSelector((state: RootState) => state.cart.items.find((obj: any) => obj.id === id));
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);
   const addedCount = cartItem ? cartItem.count : 0;

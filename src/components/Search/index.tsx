@@ -9,6 +9,7 @@ const Search = () => {
   const [value, setValue] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
    
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const updateSearchValue = useCallback(
     debounce((value:number) => { 
       dispatch(setSearchValue(value));
@@ -22,7 +23,7 @@ const Search = () => {
     inputRef.current?.focus();
   };
 
-  const onChangeInput = (e: any) => {
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
     updateSearchValue(e.target.value);
   };

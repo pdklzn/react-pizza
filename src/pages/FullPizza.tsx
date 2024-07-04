@@ -31,7 +31,8 @@ const FullPizza = () => {
   }
   return (
     <div>
-      <img src={pizza.imageUrl} alt="" />
+      <img style={{height: "300px", width: "300px"}}
+   src={pizza.imageUrl} alt="" />
       <h2>{pizza.title}</h2>
       <h4>{pizza.price}₽</h4>
       <p>Some description</p>
